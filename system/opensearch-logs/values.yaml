@@ -11,6 +11,7 @@ global:
   aggregations:
     prometheus: infra-frontend
   data_stream:
+    separate_remote_alias: "audit"
     enabled: false
     schema_version: "1"
     alerts:
