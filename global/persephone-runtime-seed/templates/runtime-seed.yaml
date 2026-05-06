@@ -22,6 +22,7 @@ spec:
 {{- end }}
 {{- if $cluster.seedName }}
   seedName: {{ $cluster.seedName }}
+  purpose: {{ default "infrastructure" $cluster.purpose }}
 {{- end }}
   provider:
     type: openstack
