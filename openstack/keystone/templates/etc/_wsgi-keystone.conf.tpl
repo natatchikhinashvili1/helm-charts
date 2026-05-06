@@ -16,7 +16,7 @@ Listen 0.0.0.0:5000
 
 {{- if .Values.use_json }}
 ErrorLog /dev/stdout
-ErrorLogFormat "{\"timestamp\":\"%{cu}t\",\"levelname\":\"ERROR\",\"name\":\"apache.error\",\"pid\":%P,\"message\":\"%{escape}M\"}"
+ErrorLogFormat "%M"
 LogFormat "{\"timestamp\":\"%{%Y-%m-%dT%H:%M:%S}t.%{msec_frac}t\",\"pid\":%{pid}P,\"levelname\":\"INFO\",\"name\":\"apache.access\",\"request_id\":\"%{X-Openstack-Request-ID}i\",\"client_ip\":\"%a\",\"method\":\"%m\",\"uri\":\"%U%q\",\"protocol\":\"%H\",\"status\":%>s,\"bytes_sent\":%B,\"duration_ms\":%{ms}T,\"referer\":\"%{Referer}i\",\"user_agent\":\"%{User-Agent}i\"}" json_combined
 LogFormat "{\"timestamp\":\"%{%Y-%m-%dT%H:%M:%S}t.%{msec_frac}t\",\"pid\":%{pid}P,\"levelname\":\"INFO\",\"name\":\"apache.access\",\"request_id\":\"%{X-Openstack-Request-ID}i\",\"client_ip\":\"%{X-Forwarded-For}i\",\"method\":\"%m\",\"uri\":\"%U%q\",\"protocol\":\"%H\",\"status\":%>s,\"bytes_sent\":%B,\"duration_ms\":%{ms}T,\"referer\":\"%{Referer}i\",\"user_agent\":\"%{User-Agent}i\"}" json_proxy
 SetEnvIf X-Forwarded-For "^.*\..*\..*\..*" forwarded
@@ -69,7 +69,7 @@ CustomLog /dev/stdout proxy env=forwarded
     LimitRequestFieldSize 16380
     <IfVersion >= 2.4>
       {{- if .Values.use_json }}
-        ErrorLogFormat "{\"timestamp\":\"%{cu}t\",\"levelname\":\"ERROR\",\"name\":\"apache.error\",\"pid\":%P,\"message\":\"%{escape}M\"}"
+        ErrorLogFormat "%M"
       {{- else }}
         ErrorLogFormat "%{cu}t %M"
       {{- end }}
