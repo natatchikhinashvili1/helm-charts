@@ -221,6 +221,14 @@ spec:
           TODO
         mayUseHostNetwork: true
 
+      - matchNamespace: cni-nanny
+        matchRepository: ccloud/cni-nanny-discovery
+        justification: |
+          cni-nanny spawns short-lived discovery Jobs to detect BGP peer
+          IPs via traceroute on the host network. The Job's pod runs the
+          cni-nanny-discovery image and requires hostNetwork: true.
+        mayUseHostNetwork: true
+
       - matchNamespace: calico-apiserver
         matchRepository: ccloud-dockerhub-mirror/calico/apiserver
         justification: |
