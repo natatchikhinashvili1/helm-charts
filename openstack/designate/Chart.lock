@@ -7,7 +7,7 @@ dependencies:
   version: 0.6.0
 - name: mariadb
   repository: oci://keppel.eu-de-1.cloud.sap/ccloud-helm
-  version: 0.35.0
+  version: 0.35.1
 - name: memcached
   repository: oci://keppel.eu-de-1.cloud.sap/ccloud-helm
   version: 0.6.16
@@ -29,5 +29,5 @@ dependencies:
 - name: redis
   repository: oci://keppel.eu-de-1.cloud.sap/ccloud-helm
   version: 2.3.1
-digest: sha256:78fa1dc2adcbac76cc1274e6e265d29cbaa7e099daddeb88f55db28c80ae60ab
-generated: "2026-04-30T17:02:07.279633+03:00"
+digest: sha256:78214d341e263158d19da6f92dce38fd78e52a702658fe73fee08ae080addfc2
+generated: "2026-05-07T10:34:02.754964+02:00"
