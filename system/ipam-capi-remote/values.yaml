@@ -11,6 +11,7 @@ controllerManager:
       runAsUser: 65532
     env:
       kubernetesServiceHost: apiserver-url
+      KUBECONFIG: "/var/run/remote-kubeconfig/kubeconfig"
     image:
       repository: controller
       tag: v1.0.3
@@ -21,11 +22,36 @@ controllerManager:
       requests:
         cpu: 10m
         memory: 64Mi
+    volumes:
+      - name: webhook-certs
+        mountPath: /tmp/k8s-webhook-server/serving-certs
+        readOnly: true
+        source:
+          emptyDir: {}
+      - name: remote-serviceaccount
+        mountPath: /var/run/secrets/kubernetes.io/remote-serviceaccount
+        readOnly: true
+        source:
+          secret:
+            secretName: ipam-capi-remote-kubeconfig
+            items:
+              - key: token
+                path: token
+              - key: bundle.crt
+                path: ca.crt
+      - name: remote-kubeconfig
+        mountPath: /var/run/remote-kubeconfig
+        readOnly: true
+        source:
+          configMap:
+            name: ipam-capi-remote-kubeconfig
   nodeSelector: {}
   podSecurityContext:
     runAsNonRoot: true
     seccompProfile:
       type: RuntimeDefault
+    runAsUser: 65532 # ensure sidecar and main controller run as same user, so they can share generated tls certs via emptyDir volume 
+    runAsGroup: 65532
   replicas: 1
   strategy:
     type: Recreate
@@ -48,3 +74,6 @@ managerConfig:
 fullnameOverride: ipam-capi
 webhook:
   enable: "true"
+webhookInjector:
+  repository: keppel.global.cloud.sap/ccloud-ghcr-io-mirror/SAP-cloud-infrastructure/webhook-injector
+  tag: latest
