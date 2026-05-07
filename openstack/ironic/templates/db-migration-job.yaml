@@ -3,7 +3,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: ironic-db-migration-{{ randAlphaNum 4 | lower }}
+  name: ironic-db-migration
   labels:
     system: openstack
     type: job
