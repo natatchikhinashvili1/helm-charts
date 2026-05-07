@@ -4,6 +4,6 @@ dependencies:
   version: 1.0.0
 - name: shared-app-images-tags
   repository: oci://keppel.eu-de-1.cloud.sap/ccloud-helm
-  version: 1.1.420
-digest: sha256:8f552310e3f2d190af94be6add776b2ed5a5cd16eae238314ee6bb67fe3c6f28
-generated: "2026-05-04T04:30:05.426497108Z"
+  version: 1.1.422
+digest: sha256:1664e7f401e04df307c12af180314979937b17c91117871932d0c9b2b3e920c6
+generated: "2026-05-06T12:20:28.05843586Z"
