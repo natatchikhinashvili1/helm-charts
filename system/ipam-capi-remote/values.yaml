@@ -21,6 +21,7 @@ controllerManager:
       requests:
         cpu: 10m
         memory: 64Mi
+  nodeSelector: {}
   podSecurityContext:
     runAsNonRoot: true
     seccompProfile:
@@ -28,6 +29,8 @@ controllerManager:
   replicas: 1
   strategy:
     type: Recreate
+  tolerations: []
+  topologySpreadConstraints: []
 kubernetesClusterDomain: cluster.local
 managerConfig:
   controllerManagerConfigYaml: |-
@@ -43,3 +46,5 @@ managerConfig:
       leaderElect: true
       resourceName: 7bb7acb4.ipam.cluster.x-k8s.io
 fullnameOverride: ipam-capi
+webhook:
+  enable: "true"
