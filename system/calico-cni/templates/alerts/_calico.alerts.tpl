@@ -69,7 +69,7 @@ groups:
         service: {{ .Values.alerts.service }}
         severity: warning
         context: availability
-        support_group: {{ .Values.alerts.networkSupportGroup }}
+        support_group: {{ .Values.alerts.supportGroup }}
         playbook: "docs/support/playbook/kubernetes/k8s_bond_degraded"
       annotations:
         description: Bond {{`{{ $labels.master }}`}} on node {{`{{ $labels.node }}`}} has {{`{{ $value }}`}} inactive member(s). Network redundancy degraded.
@@ -83,7 +83,7 @@ groups:
         service: {{ .Values.alerts.service }}
         severity: critical
         context: availability
-        support_group: {{ .Values.alerts.networkSupportGroup }}
+        support_group: {{ .Values.alerts.supportGroup }}
         playbook: "docs/support/playbook/kubernetes/k8s_bond_degraded"
       annotations:
         description: Bond {{`{{ $labels.master }}`}} on node {{`{{ $labels.node }}`}} has no active members. All redundancy lost, network datapath at risk.
@@ -100,7 +100,7 @@ groups:
         service: {{ .Values.alerts.service }}
         severity: warning
         context: availability
-        support_group: {{ .Values.alerts.networkSupportGroup }}
+        support_group: {{ .Values.alerts.supportGroup }}
         playbook: "docs/support/playbook/kubernetes/k8s_node_interface_down"
       annotations:
         description: Interface {{`{{ $labels.device }}`}} on node {{`{{ $labels.node }}`}} is dropping or erroring more than 1 packet/sec sustained over 10m.
@@ -117,7 +117,7 @@ groups:
         service: {{ .Values.alerts.service }}
         severity: warning
         context: availability
-        support_group: {{ .Values.alerts.networkSupportGroup }}
+        support_group: {{ .Values.alerts.supportGroup }}
         playbook: "docs/support/playbook/kubernetes/k8s_node_bgp_neighbor"
       annotations:
         description: BGP mesh session on node {{`{{ $labels.node }}`}} to peer {{`{{ $labels.name }}`}} is Established but exporting zero routes. Pod traffic between this node and peer may be silently broken.
@@ -131,7 +131,7 @@ groups:
         service: {{ .Values.alerts.service }}
         severity: warning
         context: availability
-        support_group: {{ .Values.alerts.networkSupportGroup }}
+        support_group: {{ .Values.alerts.supportGroup }}
         playbook: "docs/support/playbook/kubernetes/k8s_path_mtu"
       annotations:
         description: Felix on node {{`{{ $labels.node }}`}} (pod {{`{{ $labels.pod }}`}}) is failing to apply dataplane changes. Overlay routing, iptables, or tunnel configuration may be broken. Pod-to-pod traffic across nodes may be affected.
