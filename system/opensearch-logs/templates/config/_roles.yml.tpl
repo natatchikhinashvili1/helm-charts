@@ -472,6 +472,8 @@ security_analytics_full_access:
   - "cluster:admin/opendistro/ism/managedindex/explain"
   - "cluster:monitor/tasks/lists"
   - "cluster:monitor/remote/info"
+  - "cluster:monitor/health" # Required for OpenSearch terraform provider health check (after PR merge)
+  - "cluster:monitor/main" # Required for OpenSearch terraform provider health check
   - "cluster:admin/opendistro/ism/policy/search"
   index_permissions:
   - index_patterns:
