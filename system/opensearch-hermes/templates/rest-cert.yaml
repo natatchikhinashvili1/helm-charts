@@ -7,6 +7,7 @@ spec:
   dnsNames:
   - 'opensearch-hermes.{{ .Values.global.region }}.cloud.sap'
   - 'opensearch-hermes.hermes.svc.kubernetes.{{ .Values.global.region }}.cloud.sap'
+  - 'opensearch-hermes.hermes.svc.cluster.local'
   issuerRef:
     group: certmanager.cloud.sap
     kind: DigicertIssuer
