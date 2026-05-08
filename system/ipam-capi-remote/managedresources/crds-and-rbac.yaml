@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: clusters.cluster.x-k8s.io
 spec:
   group: cluster.x-k8s.io
@@ -17,702 +17,6 @@ spec:
     singular: cluster
   scope: Namespaced
   versions:
-  - additionalPrinterColumns:
-    - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
-      jsonPath: .status.phase
-      name: Phase
-      type: string
-    deprecated: true
-    name: v1alpha3
-    schema:
-      openAPIV3Schema:
-        description: Cluster is the Schema for the clusters API.
-        properties:
-          apiVersion:
-            description: |-
-              APIVersion defines the versioned schema of this representation of an object.
-              Servers should convert recognized schemas to the latest internal value, and
-              may reject unrecognized values.
-              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-            type: string
-          kind:
-            description: |-
-              Kind is a string value representing the REST resource this object represents.
-              Servers may infer this from the endpoint the client submits requests to.
-              Cannot be updated.
-              In CamelCase.
-              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: spec is the desired state of Cluster.
-            properties:
-              clusterNetwork:
-                description: clusterNetwork is the cluster network configuration.
-                properties:
-                  apiServerPort:
-                    description: |-
-                      apiServerPort specifies the port the API Server should bind to.
-                      Defaults to 6443.
-                    format: int32
-                    type: integer
-                  pods:
-                    description: pods is the network ranges from which Pod networks
-                      are allocated.
-                    properties:
-                      cidrBlocks:
-                        description: cidrBlocks is a list of CIDR blocks.
-                        items:
-                          type: string
-                        type: array
-                    required:
-                    - cidrBlocks
-                    type: object
-                  serviceDomain:
-                    description: serviceDomain is the domain name for services.
-                    type: string
-                  services:
-                    description: services is the network ranges from which service
-                      VIPs are allocated.
-                    properties:
-                      cidrBlocks:
-                        description: cidrBlocks is a list of CIDR blocks.
-                        items:
-                          type: string
-                        type: array
-                    required:
-                    - cidrBlocks
-                    type: object
-                type: object
-              controlPlaneEndpoint:
-                description: controlPlaneEndpoint represents the endpoint used to
-                  communicate with the control plane.
-                properties:
-                  host:
-                    description: host is the hostname on which the API server is serving.
-                    type: string
-                  port:
-                    description: port is the port on which the API server is serving.
-                    format: int32
-                    type: integer
-                required:
-                - host
-                - port
-                type: object
-              controlPlaneRef:
-                description: |-
-                  controlPlaneRef is an optional reference to a provider-specific resource that holds
-                  the details for provisioning the Control Plane for a Cluster.
-                properties:
-                  apiVersion:
-                    description: API version of the referent.
-                    type: string
-                  fieldPath:
-                    description: |-
-                      If referring to a piece of an object instead of an entire object, this string
-                      should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].
-                      For example, if the object reference is to a container within a pod, this would take on a value like:
-                      "spec.containers{name}" (where "name" refers to the name of the container that triggered
-                      the event) or if no container name is specified "spec.containers[2]" (container with
-                      index 2 in this pod). This syntax is chosen only to have some well-defined way of
-                      referencing a part of an object.
-                    type: string
-                  kind:
-                    description: |-
-                      Kind of the referent.
-                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-                    type: string
-                  name:
-                    description: |-
-                      Name of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                    type: string
-                  namespace:
-                    description: |-
-                      Namespace of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
-                    type: string
-                  resourceVersion:
-                    description: |-
-                      Specific resourceVersion to which this reference is made, if any.
-                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
-                    type: string
-                  uid:
-                    description: |-
-                      UID of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
-                    type: string
-                type: object
-                x-kubernetes-map-type: atomic
-              infrastructureRef:
-                description: |-
-                  infrastructureRef is a reference to a provider-specific resource that holds the details
-                  for provisioning infrastructure for a cluster in said provider.
-                properties:
-                  apiVersion:
-                    description: API version of the referent.
-                    type: string
-                  fieldPath:
-                    description: |-
-                      If referring to a piece of an object instead of an entire object, this string
-                      should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].
-                      For example, if the object reference is to a container within a pod, this would take on a value like:
-                      "spec.containers{name}" (where "name" refers to the name of the container that triggered
-                      the event) or if no container name is specified "spec.containers[2]" (container with
-                      index 2 in this pod). This syntax is chosen only to have some well-defined way of
-                      referencing a part of an object.
-                    type: string
-                  kind:
-                    description: |-
-                      Kind of the referent.
-                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-                    type: string
-                  name:
-                    description: |-
-                      Name of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                    type: string
-                  namespace:
-                    description: |-
-                      Namespace of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
-                    type: string
-                  resourceVersion:
-                    description: |-
-                      Specific resourceVersion to which this reference is made, if any.
-                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
-                    type: string
-                  uid:
-                    description: |-
-                      UID of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
-                    type: string
-                type: object
-                x-kubernetes-map-type: atomic
-              paused:
-                description: paused can be used to prevent controllers from processing
-                  the Cluster and all its associated objects.
-                type: boolean
-            type: object
-          status:
-            description: status is the observed state of Cluster.
-            properties:
-              conditions:
-                description: conditions defines current service state of the cluster.
-                items:
-                  description: Condition defines an observation of a Cluster API resource
-                    operational state.
-                  properties:
-                    lastTransitionTime:
-                      description: |-
-                        lastTransitionTime is the last time the condition transitioned from one status to another.
-                        This should be when the underlying condition changed. If that is not known, then using the time when
-                        the API field changed is acceptable.
-                      format: date-time
-                      type: string
-                    message:
-                      description: |-
-                        message is a human readable message indicating details about the transition.
-                        This field may be empty.
-                      type: string
-                    reason:
-                      description: |-
-                        reason is the reason for the condition's last transition in CamelCase.
-                        The specific API may choose whether or not this field is considered a guaranteed API.
-                        This field may not be empty.
-                      type: string
-                    severity:
-                      description: |-
-                        severity provides an explicit classification of Reason code, so the users or machines can immediately
-                        understand the current situation and act accordingly.
-                        The Severity field MUST be set only when Status=False.
-                      type: string
-                    status:
-                      description: status of the condition, one of True, False, Unknown.
-                      type: string
-                    type:
-                      description: |-
-                        type of condition in CamelCase or in foo.example.com/CamelCase.
-                        Many .condition.type values are consistent across resources like Available, but because arbitrary conditions
-                        can be useful (see .node.status.conditions), the ability to deconflict is important.
-                      type: string
-                  required:
-                  - status
-                  - type
-                  type: object
-                type: array
-              controlPlaneInitialized:
-                description: controlPlaneInitialized defines if the control plane
-                  has been initialized.
-                type: boolean
-              controlPlaneReady:
-                description: controlPlaneReady defines if the control plane is ready.
-                type: boolean
-              failureDomains:
-                additionalProperties:
-                  description: |-
-                    FailureDomainSpec is the Schema for Cluster API failure domains.
-                    It allows controllers to understand how many failure domains a cluster can optionally span across.
-                  properties:
-                    attributes:
-                      additionalProperties:
-                        type: string
-                      description: attributes is a free form map of attributes an
-                        infrastructure provider might use or require.
-                      type: object
-                    controlPlane:
-                      description: controlPlane determines if this failure domain
-                        is suitable for use by control plane machines.
-                      type: boolean
-                  type: object
-                description: failureDomains is a slice of failure domain objects synced
-                  from the infrastructure provider.
-                type: object
-              failureMessage:
-                description: |-
-                  failureMessage indicates that there is a fatal problem reconciling the
-                  state, and will be set to a descriptive error message.
-                type: string
-              failureReason:
-                description: |-
-                  failureReason indicates that there is a fatal problem reconciling the
-                  state, and will be set to a token value suitable for
-                  programmatic interpretation.
-                type: string
-              infrastructureReady:
-                description: infrastructureReady is the state of the infrastructure
-                  provider.
-                type: boolean
-              observedGeneration:
-                description: observedGeneration is the latest generation observed
-                  by the controller.
-                format: int64
-                type: integer
-              phase:
-                description: |-
-                  phase represents the current phase of cluster actuation.
-                  E.g. Pending, Running, Terminating, Failed etc.
-                type: string
-            type: object
-        type: object
-    served: false
-    storage: false
-    subresources:
-      status: {}
-  - additionalPrinterColumns:
-    - description: Time duration since creation of Cluster
-      jsonPath: .metadata.creationTimestamp
-      name: Age
-      type: date
-    - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
-      jsonPath: .status.phase
-      name: Phase
-      type: string
-    deprecated: true
-    name: v1alpha4
-    schema:
-      openAPIV3Schema:
-        description: |-
-          Cluster is the Schema for the clusters API.
-
-          Deprecated: This type will be removed in one of the next releases.
-        properties:
-          apiVersion:
-            description: |-
-              APIVersion defines the versioned schema of this representation of an object.
-              Servers should convert recognized schemas to the latest internal value, and
-              may reject unrecognized values.
-              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-            type: string
-          kind:
-            description: |-
-              Kind is a string value representing the REST resource this object represents.
-              Servers may infer this from the endpoint the client submits requests to.
-              Cannot be updated.
-              In CamelCase.
-              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: spec is the desired state of Cluster.
-            properties:
-              clusterNetwork:
-                description: clusterNetwork is the cluster network configuration.
-                properties:
-                  apiServerPort:
-                    description: |-
-                      apiServerPort specifies the port the API Server should bind to.
-                      Defaults to 6443.
-                    format: int32
-                    type: integer
-                  pods:
-                    description: pods is the network ranges from which Pod networks
-                      are allocated.
-                    properties:
-                      cidrBlocks:
-                        description: cidrBlocks is a list of CIDR blocks.
-                        items:
-                          type: string
-                        type: array
-                    required:
-                    - cidrBlocks
-                    type: object
-                  serviceDomain:
-                    description: serviceDomain is the domain name for services.
-                    type: string
-                  services:
-                    description: services is the network ranges from which service
-                      VIPs are allocated.
-                    properties:
-                      cidrBlocks:
-                        description: cidrBlocks is a list of CIDR blocks.
-                        items:
-                          type: string
-                        type: array
-                    required:
-                    - cidrBlocks
-                    type: object
-                type: object
-              controlPlaneEndpoint:
-                description: controlPlaneEndpoint represents the endpoint used to
-                  communicate with the control plane.
-                properties:
-                  host:
-                    description: host is the hostname on which the API server is serving.
-                    type: string
-                  port:
-                    description: port is the port on which the API server is serving.
-                    format: int32
-                    type: integer
-                required:
-                - host
-                - port
-                type: object
-              controlPlaneRef:
-                description: |-
-                  controlPlaneRef is an optional reference to a provider-specific resource that holds
-                  the details for provisioning the Control Plane for a Cluster.
-                properties:
-                  apiVersion:
-                    description: API version of the referent.
-                    type: string
-                  fieldPath:
-                    description: |-
-                      If referring to a piece of an object instead of an entire object, this string
-                      should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].
-                      For example, if the object reference is to a container within a pod, this would take on a value like:
-                      "spec.containers{name}" (where "name" refers to the name of the container that triggered
-                      the event) or if no container name is specified "spec.containers[2]" (container with
-                      index 2 in this pod). This syntax is chosen only to have some well-defined way of
-                      referencing a part of an object.
-                    type: string
-                  kind:
-                    description: |-
-                      Kind of the referent.
-                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-                    type: string
-                  name:
-                    description: |-
-                      Name of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                    type: string
-                  namespace:
-                    description: |-
-                      Namespace of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
-                    type: string
-                  resourceVersion:
-                    description: |-
-                      Specific resourceVersion to which this reference is made, if any.
-                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
-                    type: string
-                  uid:
-                    description: |-
-                      UID of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
-                    type: string
-                type: object
-                x-kubernetes-map-type: atomic
-              infrastructureRef:
-                description: |-
-                  infrastructureRef is a reference to a provider-specific resource that holds the details
-                  for provisioning infrastructure for a cluster in said provider.
-                properties:
-                  apiVersion:
-                    description: API version of the referent.
-                    type: string
-                  fieldPath:
-                    description: |-
-                      If referring to a piece of an object instead of an entire object, this string
-                      should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].
-                      For example, if the object reference is to a container within a pod, this would take on a value like:
-                      "spec.containers{name}" (where "name" refers to the name of the container that triggered
-                      the event) or if no container name is specified "spec.containers[2]" (container with
-                      index 2 in this pod). This syntax is chosen only to have some well-defined way of
-                      referencing a part of an object.
-                    type: string
-                  kind:
-                    description: |-
-                      Kind of the referent.
-                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-                    type: string
-                  name:
-                    description: |-
-                      Name of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                    type: string
-                  namespace:
-                    description: |-
-                      Namespace of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
-                    type: string
-                  resourceVersion:
-                    description: |-
-                      Specific resourceVersion to which this reference is made, if any.
-                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
-                    type: string
-                  uid:
-                    description: |-
-                      UID of the referent.
-                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
-                    type: string
-                type: object
-                x-kubernetes-map-type: atomic
-              paused:
-                description: paused can be used to prevent controllers from processing
-                  the Cluster and all its associated objects.
-                type: boolean
-              topology:
-                description: |-
-                  topology encapsulates the topology for the cluster.
-                  NOTE: It is required to enable the ClusterTopology
-                  feature gate flag to activate managed topologies support;
-                  this feature is highly experimental, and parts of it might still be not implemented.
-                properties:
-                  class:
-                    description: class is the name of the ClusterClass object to create
-                      the topology.
-                    type: string
-                  controlPlane:
-                    description: controlPlane describes the cluster control plane.
-                    properties:
-                      metadata:
-                        description: |-
-                          metadata is the metadata applied to the machines of the ControlPlane.
-                          At runtime this metadata is merged with the corresponding metadata from the ClusterClass.
-
-                          This field is supported if and only if the control plane provider template
-                          referenced in the ClusterClass is Machine based.
-                        properties:
-                          annotations:
-                            additionalProperties:
-                              type: string
-                            description: |-
-                              annotations is an unstructured key value map stored with a resource that may be
-                              set by external tools to store and retrieve arbitrary metadata. They are not
-                              queryable and should be preserved when modifying objects.
-                              More info: http://kubernetes.io/docs/user-guide/annotations
-                            type: object
-                          labels:
-                            additionalProperties:
-                              type: string
-                            description: |-
-                              labels is a map of string keys and values that can be used to organize and categorize
-                              (scope and select) objects. May match selectors of replication controllers
-                              and services.
-                              More info: http://kubernetes.io/docs/user-guide/labels
-                            type: object
-                        type: object
-                      replicas:
-                        description: |-
-                          replicas is the number of control plane nodes.
-                          If the value is nil, the ControlPlane object is created without the number of Replicas
-                          and it's assumed that the control plane controller does not implement support for this field.
-                          When specified against a control plane provider that lacks support for this field, this value will be ignored.
-                        format: int32
-                        type: integer
-                    type: object
-                  rolloutAfter:
-                    description: |-
-                      rolloutAfter performs a rollout of the entire cluster one component at a time,
-                      control plane first and then machine deployments.
-                    format: date-time
-                    type: string
-                  version:
-                    description: version is the Kubernetes version of the cluster.
-                    type: string
-                  workers:
-                    description: |-
-                      workers encapsulates the different constructs that form the worker nodes
-                      for the cluster.
-                    properties:
-                      machineDeployments:
-                        description: machineDeployments is a list of machine deployments
-                          in the cluster.
-                        items:
-                          description: |-
-                            MachineDeploymentTopology specifies the different parameters for a set of worker nodes in the topology.
-                            This set of nodes is managed by a MachineDeployment object whose lifecycle is managed by the Cluster controller.
-                          properties:
-                            class:
-                              description: |-
-                                class is the name of the MachineDeploymentClass used to create the set of worker nodes.
-                                This should match one of the deployment classes defined in the ClusterClass object
-                                mentioned in the `Cluster.Spec.Class` field.
-                              type: string
-                            metadata:
-                              description: |-
-                                metadata is the metadata applied to the machines of the MachineDeployment.
-                                At runtime this metadata is merged with the corresponding metadata from the ClusterClass.
-                              properties:
-                                annotations:
-                                  additionalProperties:
-                                    type: string
-                                  description: |-
-                                    annotations is an unstructured key value map stored with a resource that may be
-                                    set by external tools to store and retrieve arbitrary metadata. They are not
-                                    queryable and should be preserved when modifying objects.
-                                    More info: http://kubernetes.io/docs/user-guide/annotations
-                                  type: object
-                                labels:
-                                  additionalProperties:
-                                    type: string
-                                  description: |-
-                                    labels is a map of string keys and values that can be used to organize and categorize
-                                    (scope and select) objects. May match selectors of replication controllers
-                                    and services.
-                                    More info: http://kubernetes.io/docs/user-guide/labels
-                                  type: object
-                              type: object
-                            name:
-                              description: |-
-                                name is the unique identifier for this MachineDeploymentTopology.
-                                The value is used with other unique identifiers to create a MachineDeployment's Name
-                                (e.g. cluster's name, etc). In case the name is greater than the allowed maximum length,
-                                the values are hashed together.
-                              type: string
-                            replicas:
-                              description: |-
-                                replicas is the number of worker nodes belonging to this set.
-                                If the value is nil, the MachineDeployment is created without the number of Replicas (defaulting to zero)
-                                and it's assumed that an external entity (like cluster autoscaler) is responsible for the management
-                                of this value.
-                              format: int32
-                              type: integer
-                          required:
-                          - class
-                          - name
-                          type: object
-                        type: array
-                    type: object
-                required:
-                - class
-                - version
-                type: object
-            type: object
-          status:
-            description: status is the observed state of Cluster.
-            properties:
-              conditions:
-                description: conditions defines current service state of the cluster.
-                items:
-                  description: Condition defines an observation of a Cluster API resource
-                    operational state.
-                  properties:
-                    lastTransitionTime:
-                      description: |-
-                        lastTransitionTime is the last time the condition transitioned from one status to another.
-                        This should be when the underlying condition changed. If that is not known, then using the time when
-                        the API field changed is acceptable.
-                      format: date-time
-                      type: string
-                    message:
-                      description: |-
-                        message is a human readable message indicating details about the transition.
-                        This field may be empty.
-                      type: string
-                    reason:
-                      description: |-
-                        reason is the reason for the condition's last transition in CamelCase.
-                        The specific API may choose whether or not this field is considered a guaranteed API.
-                        This field may not be empty.
-                      type: string
-                    severity:
-                      description: |-
-                        severity provides an explicit classification of Reason code, so the users or machines can immediately
-                        understand the current situation and act accordingly.
-                        The Severity field MUST be set only when Status=False.
-                      type: string
-                    status:
-                      description: status of the condition, one of True, False, Unknown.
-                      type: string
-                    type:
-                      description: |-
-                        type of condition in CamelCase or in foo.example.com/CamelCase.
-                        Many .condition.type values are consistent across resources like Available, but because arbitrary conditions
-                        can be useful (see .node.status.conditions), the ability to deconflict is important.
-                      type: string
-                  required:
-                  - status
-                  - type
-                  type: object
-                type: array
-              controlPlaneReady:
-                description: controlPlaneReady defines if the control plane is ready.
-                type: boolean
-              failureDomains:
-                additionalProperties:
-                  description: |-
-                    FailureDomainSpec is the Schema for Cluster API failure domains.
-                    It allows controllers to understand how many failure domains a cluster can optionally span across.
-                  properties:
-                    attributes:
-                      additionalProperties:
-                        type: string
-                      description: attributes is a free form map of attributes an
-                        infrastructure provider might use or require.
-                      type: object
-                    controlPlane:
-                      description: controlPlane determines if this failure domain
-                        is suitable for use by control plane machines.
-                      type: boolean
-                  type: object
-                description: failureDomains is a slice of failure domain objects synced
-                  from the infrastructure provider.
-                type: object
-              failureMessage:
-                description: |-
-                  failureMessage indicates that there is a fatal problem reconciling the
-                  state, and will be set to a descriptive error message.
-                type: string
-              failureReason:
-                description: |-
-                  failureReason indicates that there is a fatal problem reconciling the
-                  state, and will be set to a token value suitable for
-                  programmatic interpretation.
-                type: string
-              infrastructureReady:
-                description: infrastructureReady is the state of the infrastructure
-                  provider.
-                type: boolean
-              observedGeneration:
-                description: observedGeneration is the latest generation observed
-                  by the controller.
-                format: int64
-                type: integer
-              phase:
-                description: |-
-                  phase represents the current phase of cluster actuation.
-                  E.g. Pending, Running, Terminating, Failed etc.
-                type: string
-            type: object
-        type: object
-    served: false
-    storage: false
-    subresources:
-      status: {}
   - additionalPrinterColumns:
     - description: ClusterClass of this Cluster, empty if the Cluster is not using
         a ClusterClass
@@ -953,8 +257,7 @@ spec:
                 description: |-
                   topology encapsulates the topology for the cluster.
                   NOTE: It is required to enable the ClusterTopology
-                  feature gate flag to activate managed topologies support;
-                  this feature is highly experimental, and parts of it might still be not implemented.
+                  feature gate flag to activate managed topologies support.
                 properties:
                   class:
                     description: class is the name of the ClusterClass object to create
@@ -1100,6 +403,51 @@ spec:
                               type: object
                             maxItems: 100
                             type: array
+                          unhealthyMachineConditions:
+                            description: |-
+                              unhealthyMachineConditions contains a list of the machine conditions that determine
+                              whether a machine is considered unhealthy.  The conditions are combined in a
+                              logical OR, i.e. if any of the conditions is met, the machine is unhealthy.
+                            items:
+                              description: |-
+                                UnhealthyMachineCondition represents a Machine condition type and value with a timeout
+                                specified as a duration.  When the named condition has been in the given
+                                status for at least the timeout value, a machine is considered unhealthy.
+                              properties:
+                                status:
+                                  description: status of the condition, one of True,
+                                    False, Unknown.
+                                  enum:
+                                  - "True"
+                                  - "False"
+                                  - Unknown
+                                  type: string
+                                timeout:
+                                  description: |-
+                                    timeout is the duration that a Machine must be in a given status for,
+                                    after which the Machine is considered unhealthy.
+                                    For example, with a value of "1h", the Machine must match the status
+                                    for at least 1 hour before being considered unhealthy.
+                                  type: string
+                                type:
+                                  description: type of Machine condition
+                                  maxLength: 316
+                                  minLength: 1
+                                  pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                                  type: string
+                                  x-kubernetes-validations:
+                                  - message: 'type must not be one of: Ready, Available,
+                                      HealthCheckSucceeded, OwnerRemediated, ExternallyRemediated'
+                                    rule: '!(self in [''Ready'',''Available'',''HealthCheckSucceeded'',''OwnerRemediated'',''ExternallyRemediated''])'
+                              required:
+                              - status
+                              - timeout
+                              - type
+                              type: object
+                            maxItems: 100
+                            minItems: 1
+                            type: array
+                            x-kubernetes-list-type: atomic
                           unhealthyRange:
                             description: |-
                               unhealthyRange specifies the range of unhealthy machines allowed.
@@ -1208,6 +556,84 @@ spec:
                           When specified against a control plane provider that lacks support for this field, this value will be ignored.
                         format: int32
                         type: integer
+                      rollout:
+                        description: rollout allows you to configure the behavior
+                          of rolling updates to the control plane.
+                        minProperties: 1
+                        properties:
+                          after:
+                            description: |-
+                              after is a field to indicate a rollout should be performed
+                              after the specified time even if no changes have been made to the ControlPlane.
+                              Example: In the YAML the time can be specified in the RFC3339 format.
+                              To specify the rolloutAfter target as March 9, 2023, at 9 am UTC
+                              use "2023-03-09T09:00:00Z".
+                            format: date-time
+                            type: string
+                        type: object
+                      taints:
+                        description: |-
+                          taints are the node taints that Cluster API will manage.
+                          This list is not necessarily complete: other Kubernetes components may add or remove other taints from nodes,
+                          e.g. the node controller might add the node.kubernetes.io/not-ready taint.
+                          Only those taints defined in this list will be added or removed by core Cluster API controllers.
+
+                          There can be at most 64 taints.
+                          A pod would have to tolerate all existing taints to run on the corresponding node.
+
+                          NOTE: This list is implemented as a "map" type, meaning that individual elements can be managed by different owners.
+                        items:
+                          description: MachineTaint defines a taint equivalent to
+                            corev1.Taint, but additionally having a propagation field.
+                          properties:
+                            effect:
+                              description: effect is the effect for the taint. Valid
+                                values are NoSchedule, PreferNoSchedule and NoExecute.
+                              enum:
+                              - NoSchedule
+                              - PreferNoSchedule
+                              - NoExecute
+                              type: string
+                            key:
+                              description: |-
+                                key is the taint key to be applied to a node.
+                                Must be a valid qualified name of maximum size 63 characters
+                                with an optional subdomain prefix of maximum size 253 characters,
+                                separated by a `/`.
+                              maxLength: 317
+                              minLength: 1
+                              pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*\/)?([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$
+                              type: string
+                            propagation:
+                              description: |-
+                                propagation defines how this taint should be propagated to nodes.
+                                Valid values are 'Always' and 'OnInitialization'.
+                                Always: The taint will be continuously reconciled. If it is not set for a node, it will be added during reconciliation.
+                                OnInitialization: The taint will be added during node initialization. If it gets removed from the node later on it will not get added again.
+                              enum:
+                              - Always
+                              - OnInitialization
+                              type: string
+                            value:
+                              description: |-
+                                value is the taint value corresponding to the taint key.
+                                It must be a valid label value of maximum size 63 characters.
+                              maxLength: 63
+                              minLength: 1
+                              pattern: ^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$
+                              type: string
+                          required:
+                          - effect
+                          - key
+                          - propagation
+                          type: object
+                        maxItems: 64
+                        minItems: 1
+                        type: array
+                        x-kubernetes-list-map-keys:
+                        - key
+                        - effect
+                        x-kubernetes-list-type: map
                       variables:
                         description: variables can be used to customize the ControlPlane
                           through patches.
@@ -1459,6 +885,52 @@ spec:
                                     type: object
                                   maxItems: 100
                                   type: array
+                                unhealthyMachineConditions:
+                                  description: |-
+                                    unhealthyMachineConditions contains a list of the machine conditions that determine
+                                    whether a machine is considered unhealthy.  The conditions are combined in a
+                                    logical OR, i.e. if any of the conditions is met, the machine is unhealthy.
+                                  items:
+                                    description: |-
+                                      UnhealthyMachineCondition represents a Machine condition type and value with a timeout
+                                      specified as a duration.  When the named condition has been in the given
+                                      status for at least the timeout value, a machine is considered unhealthy.
+                                    properties:
+                                      status:
+                                        description: status of the condition, one
+                                          of True, False, Unknown.
+                                        enum:
+                                        - "True"
+                                        - "False"
+                                        - Unknown
+                                        type: string
+                                      timeout:
+                                        description: |-
+                                          timeout is the duration that a Machine must be in a given status for,
+                                          after which the Machine is considered unhealthy.
+                                          For example, with a value of "1h", the Machine must match the status
+                                          for at least 1 hour before being considered unhealthy.
+                                        type: string
+                                      type:
+                                        description: type of Machine condition
+                                        maxLength: 316
+                                        minLength: 1
+                                        pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                                        type: string
+                                        x-kubernetes-validations:
+                                        - message: 'type must not be one of: Ready,
+                                            Available, HealthCheckSucceeded, OwnerRemediated,
+                                            ExternallyRemediated'
+                                          rule: '!(self in [''Ready'',''Available'',''HealthCheckSucceeded'',''OwnerRemediated'',''ExternallyRemediated''])'
+                                    required:
+                                    - status
+                                    - timeout
+                                    - type
+                                    type: object
+                                  maxItems: 100
+                                  minItems: 1
+                                  type: array
+                                  x-kubernetes-list-type: atomic
                                 unhealthyRange:
                                   description: |-
                                     unhealthyRange specifies the range of unhealthy machines allowed.
@@ -1581,6 +1053,23 @@ spec:
                                 of this value.
                               format: int32
                               type: integer
+                            rollout:
+                              description: |-
+                                rollout allows you to configure the behaviour of rolling updates to the MachineDeployment Machines.
+                                It allows you to define the strategy used during rolling replacements.
+                              minProperties: 1
+                              properties:
+                                after:
+                                  description: |-
+                                    after is a field to indicate a rollout should be performed
+                                    after the specified time even if no changes have been made to the
+                                    MachineDeployment.
+                                    Example: In the YAML the time can be specified in the RFC3339 format.
+                                    To specify the rolloutAfter target as March 9, 2023, at 9 am UTC
+                                    use "2023-03-09T09:00:00Z".
+                                  format: date-time
+                                  type: string
+                              type: object
                             strategy:
                               description: |-
                                 strategy is the deployment strategy to use to replace existing machines with
@@ -1620,7 +1109,7 @@ spec:
                                     deletePolicy:
                                       description: |-
                                         deletePolicy defines the policy used by the MachineDeployment to identify nodes to delete when downscaling.
-                                        Valid values are "Random, "Newest", "Oldest"
+                                        Valid values are "Random", "Newest", "Oldest"
                                         When no value is supplied, the default DeletePolicy of MachineSet is used
                                       enum:
                                       - Random
@@ -1674,6 +1163,71 @@ spec:
                                   - OnDelete
                                   type: string
                               type: object
+                            taints:
+                              description: |-
+                                taints are the node taints that Cluster API will manage.
+                                This list is not necessarily complete: other Kubernetes components may add or remove other taints from nodes,
+                                e.g. the node controller might add the node.kubernetes.io/not-ready taint.
+                                Only those taints defined in this list will be added or removed by core Cluster API controllers.
+
+                                There can be at most 64 taints.
+                                A pod would have to tolerate all existing taints to run on the corresponding node.
+
+                                NOTE: This list is implemented as a "map" type, meaning that individual elements can be managed by different owners.
+                              items:
+                                description: MachineTaint defines a taint equivalent
+                                  to corev1.Taint, but additionally having a propagation
+                                  field.
+                                properties:
+                                  effect:
+                                    description: effect is the effect for the taint.
+                                      Valid values are NoSchedule, PreferNoSchedule
+                                      and NoExecute.
+                                    enum:
+                                    - NoSchedule
+                                    - PreferNoSchedule
+                                    - NoExecute
+                                    type: string
+                                  key:
+                                    description: |-
+                                      key is the taint key to be applied to a node.
+                                      Must be a valid qualified name of maximum size 63 characters
+                                      with an optional subdomain prefix of maximum size 253 characters,
+                                      separated by a `/`.
+                                    maxLength: 317
+                                    minLength: 1
+                                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*\/)?([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$
+                                    type: string
+                                  propagation:
+                                    description: |-
+                                      propagation defines how this taint should be propagated to nodes.
+                                      Valid values are 'Always' and 'OnInitialization'.
+                                      Always: The taint will be continuously reconciled. If it is not set for a node, it will be added during reconciliation.
+                                      OnInitialization: The taint will be added during node initialization. If it gets removed from the node later on it will not get added again.
+                                    enum:
+                                    - Always
+                                    - OnInitialization
+                                    type: string
+                                  value:
+                                    description: |-
+                                      value is the taint value corresponding to the taint key.
+                                      It must be a valid label value of maximum size 63 characters.
+                                    maxLength: 63
+                                    minLength: 1
+                                    pattern: ^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$
+                                    type: string
+                                required:
+                                - effect
+                                - key
+                                - propagation
+                                type: object
+                              maxItems: 64
+                              minItems: 1
+                              type: array
+                              x-kubernetes-list-map-keys:
+                              - key
+                              - effect
+                              x-kubernetes-list-type: map
                             variables:
                               description: variables can be used to customize the
                                 MachineDeployment through patches.
@@ -1819,6 +1373,71 @@ spec:
                                 of this value.
                               format: int32
                               type: integer
+                            taints:
+                              description: |-
+                                taints are the node taints that Cluster API will manage.
+                                This list is not necessarily complete: other Kubernetes components may add or remove other taints from nodes,
+                                e.g. the node controller might add the node.kubernetes.io/not-ready taint.
+                                Only those taints defined in this list will be added or removed by core Cluster API controllers.
+
+                                There can be at most 64 taints.
+                                A pod would have to tolerate all existing taints to run on the corresponding node.
+
+                                NOTE: This list is implemented as a "map" type, meaning that individual elements can be managed by different owners.
+                              items:
+                                description: MachineTaint defines a taint equivalent
+                                  to corev1.Taint, but additionally having a propagation
+                                  field.
+                                properties:
+                                  effect:
+                                    description: effect is the effect for the taint.
+                                      Valid values are NoSchedule, PreferNoSchedule
+                                      and NoExecute.
+                                    enum:
+                                    - NoSchedule
+                                    - PreferNoSchedule
+                                    - NoExecute
+                                    type: string
+                                  key:
+                                    description: |-
+                                      key is the taint key to be applied to a node.
+                                      Must be a valid qualified name of maximum size 63 characters
+                                      with an optional subdomain prefix of maximum size 253 characters,
+                                      separated by a `/`.
+                                    maxLength: 317
+                                    minLength: 1
+                                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*\/)?([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$
+                                    type: string
+                                  propagation:
+                                    description: |-
+                                      propagation defines how this taint should be propagated to nodes.
+                                      Valid values are 'Always' and 'OnInitialization'.
+                                      Always: The taint will be continuously reconciled. If it is not set for a node, it will be added during reconciliation.
+                                      OnInitialization: The taint will be added during node initialization. If it gets removed from the node later on it will not get added again.
+                                    enum:
+                                    - Always
+                                    - OnInitialization
+                                    type: string
+                                  value:
+                                    description: |-
+                                      value is the taint value corresponding to the taint key.
+                                      It must be a valid label value of maximum size 63 characters.
+                                    maxLength: 63
+                                    minLength: 1
+                                    pattern: ^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$
+                                    type: string
+                                required:
+                                - effect
+                                - key
+                                - propagation
+                                type: object
+                              maxItems: 64
+                              minItems: 1
+                              type: array
+                              x-kubernetes-list-map-keys:
+                              - key
+                              - effect
+                              x-kubernetes-list-type: map
                             variables:
                               description: variables can be used to customize the
                                 MachinePool through patches.
@@ -2427,8 +2046,7 @@ spec:
                 description: |-
                   topology encapsulates the topology for the cluster.
                   NOTE: It is required to enable the ClusterTopology
-                  feature gate flag to activate managed topologies support;
-                  this feature is highly experimental, and parts of it might still be not implemented.
+                  feature gate flag to activate managed topologies support.
                 properties:
                   classRef:
                     description: classRef is the ref to the ClusterClass that should
@@ -2793,6 +2411,84 @@ spec:
                           When specified against a control plane provider that lacks support for this field, this value will be ignored.
                         format: int32
                         type: integer
+                      rollout:
+                        description: rollout allows you to configure the behavior
+                          of rolling updates to the control plane.
+                        minProperties: 1
+                        properties:
+                          after:
+                            description: |-
+                              after is a field to indicate a rollout should be performed
+                              after the specified time even if no changes have been made to the ControlPlane.
+                              Example: In the YAML the time can be specified in the RFC3339 format.
+                              To specify the rolloutAfter target as March 9, 2023, at 9 am UTC
+                              use "2023-03-09T09:00:00Z".
+                            format: date-time
+                            type: string
+                        type: object
+                      taints:
+                        description: |-
+                          taints are the node taints that Cluster API will manage.
+                          This list is not necessarily complete: other Kubernetes components may add or remove other taints from nodes,
+                          e.g. the node controller might add the node.kubernetes.io/not-ready taint.
+                          Only those taints defined in this list will be added or removed by core Cluster API controllers.
+
+                          There can be at most 64 taints.
+                          A pod would have to tolerate all existing taints to run on the corresponding node.
+
+                          NOTE: This list is implemented as a "map" type, meaning that individual elements can be managed by different owners.
+                        items:
+                          description: MachineTaint defines a taint equivalent to
+                            corev1.Taint, but additionally having a propagation field.
+                          properties:
+                            effect:
+                              description: effect is the effect for the taint. Valid
+                                values are NoSchedule, PreferNoSchedule and NoExecute.
+                              enum:
+                              - NoSchedule
+                              - PreferNoSchedule
+                              - NoExecute
+                              type: string
+                            key:
+                              description: |-
+                                key is the taint key to be applied to a node.
+                                Must be a valid qualified name of maximum size 63 characters
+                                with an optional subdomain prefix of maximum size 253 characters,
+                                separated by a `/`.
+                              maxLength: 317
+                              minLength: 1
+                              pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*\/)?([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$
+                              type: string
+                            propagation:
+                              description: |-
+                                propagation defines how this taint should be propagated to nodes.
+                                Valid values are 'Always' and 'OnInitialization'.
+                                Always: The taint will be continuously reconciled. If it is not set for a node, it will be added during reconciliation.
+                                OnInitialization: The taint will be added during node initialization. If it gets removed from the node later on it will not get added again.
+                              enum:
+                              - Always
+                              - OnInitialization
+                              type: string
+                            value:
+                              description: |-
+                                value is the taint value corresponding to the taint key.
+                                It must be a valid label value of maximum size 63 characters.
+                              maxLength: 63
+                              minLength: 1
+                              pattern: ^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$
+                              type: string
+                          required:
+                          - effect
+                          - key
+                          - propagation
+                          type: object
+                        maxItems: 64
+                        minItems: 1
+                        type: array
+                        x-kubernetes-list-map-keys:
+                        - key
+                        - effect
+                        x-kubernetes-list-type: map
                       variables:
                         description: variables can be used to customize the ControlPlane
                           through patches.
@@ -2926,7 +2622,7 @@ spec:
                                 order:
                                   description: |-
                                     order defines the order in which Machines are deleted when downscaling.
-                                    Defaults to "Random".  Valid values are "Random, "Newest", "Oldest"
+                                    Defaults to "Random". Valid values are "Random", "Newest", "Oldest"
                                   enum:
                                   - Random
                                   - Newest
@@ -3283,6 +2979,16 @@ spec:
                                 It allows you to define the strategy used during rolling replacements.
                               minProperties: 1
                               properties:
+                                after:
+                                  description: |-
+                                    after is a field to indicate a rollout should be performed
+                                    after the specified time even if no changes have been made to the
+                                    MachineDeployment.
+                                    Example: In the YAML the time can be specified in the RFC3339 format.
+                                    To specify the rolloutAfter target as March 9, 2023, at 9 am UTC
+                                    use "2023-03-09T09:00:00Z".
+                                  format: date-time
+                                  type: string
                                 strategy:
                                   description: strategy specifies how to roll out
                                     control plane Machines.
@@ -3344,6 +3050,71 @@ spec:
                                   - type
                                   type: object
                               type: object
+                            taints:
+                              description: |-
+                                taints are the node taints that Cluster API will manage.
+                                This list is not necessarily complete: other Kubernetes components may add or remove other taints from nodes,
+                                e.g. the node controller might add the node.kubernetes.io/not-ready taint.
+                                Only those taints defined in this list will be added or removed by core Cluster API controllers.
+
+                                There can be at most 64 taints.
+                                A pod would have to tolerate all existing taints to run on the corresponding node.
+
+                                NOTE: This list is implemented as a "map" type, meaning that individual elements can be managed by different owners.
+                              items:
+                                description: MachineTaint defines a taint equivalent
+                                  to corev1.Taint, but additionally having a propagation
+                                  field.
+                                properties:
+                                  effect:
+                                    description: effect is the effect for the taint.
+                                      Valid values are NoSchedule, PreferNoSchedule
+                                      and NoExecute.
+                                    enum:
+                                    - NoSchedule
+                                    - PreferNoSchedule
+                                    - NoExecute
+                                    type: string
+                                  key:
+                                    description: |-
+                                      key is the taint key to be applied to a node.
+                                      Must be a valid qualified name of maximum size 63 characters
+                                      with an optional subdomain prefix of maximum size 253 characters,
+                                      separated by a `/`.
+                                    maxLength: 317
+                                    minLength: 1
+                                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*\/)?([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$
+                                    type: string
+                                  propagation:
+                                    description: |-
+                                      propagation defines how this taint should be propagated to nodes.
+                                      Valid values are 'Always' and 'OnInitialization'.
+                                      Always: The taint will be continuously reconciled. If it is not set for a node, it will be added during reconciliation.
+                                      OnInitialization: The taint will be added during node initialization. If it gets removed from the node later on it will not get added again.
+                                    enum:
+                                    - Always
+                                    - OnInitialization
+                                    type: string
+                                  value:
+                                    description: |-
+                                      value is the taint value corresponding to the taint key.
+                                      It must be a valid label value of maximum size 63 characters.
+                                    maxLength: 63
+                                    minLength: 1
+                                    pattern: ^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$
+                                    type: string
+                                required:
+                                - effect
+                                - key
+                                - propagation
+                                type: object
+                              maxItems: 64
+                              minItems: 1
+                              type: array
+                              x-kubernetes-list-map-keys:
+                              - key
+                              - effect
+                              x-kubernetes-list-type: map
                             variables:
                               description: variables can be used to customize the
                                 MachineDeployment through patches.
@@ -3502,6 +3273,71 @@ spec:
                                 of this value.
                               format: int32
                               type: integer
+                            taints:
+                              description: |-
+                                taints are the node taints that Cluster API will manage.
+                                This list is not necessarily complete: other Kubernetes components may add or remove other taints from nodes,
+                                e.g. the node controller might add the node.kubernetes.io/not-ready taint.
+                                Only those taints defined in this list will be added or removed by core Cluster API controllers.
+
+                                There can be at most 64 taints.
+                                A pod would have to tolerate all existing taints to run on the corresponding node.
+
+                                NOTE: This list is implemented as a "map" type, meaning that individual elements can be managed by different owners.
+                              items:
+                                description: MachineTaint defines a taint equivalent
+                                  to corev1.Taint, but additionally having a propagation
+                                  field.
+                                properties:
+                                  effect:
+                                    description: effect is the effect for the taint.
+                                      Valid values are NoSchedule, PreferNoSchedule
+                                      and NoExecute.
+                                    enum:
+                                    - NoSchedule
+                                    - PreferNoSchedule
+                                    - NoExecute
+                                    type: string
+                                  key:
+                                    description: |-
+                                      key is the taint key to be applied to a node.
+                                      Must be a valid qualified name of maximum size 63 characters
+                                      with an optional subdomain prefix of maximum size 253 characters,
+                                      separated by a `/`.
+                                    maxLength: 317
+                                    minLength: 1
+                                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*\/)?([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$
+                                    type: string
+                                  propagation:
+                                    description: |-
+                                      propagation defines how this taint should be propagated to nodes.
+                                      Valid values are 'Always' and 'OnInitialization'.
+                                      Always: The taint will be continuously reconciled. If it is not set for a node, it will be added during reconciliation.
+                                      OnInitialization: The taint will be added during node initialization. If it gets removed from the node later on it will not get added again.
+                                    enum:
+                                    - Always
+                                    - OnInitialization
+                                    type: string
+                                  value:
+                                    description: |-
+                                      value is the taint value corresponding to the taint key.
+                                      It must be a valid label value of maximum size 63 characters.
+                                    maxLength: 63
+                                    minLength: 1
+                                    pattern: ^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$
+                                    type: string
+                                required:
+                                - effect
+                                - key
+                                - propagation
+                                type: object
+                              maxItems: 64
+                              minItems: 1
+                              type: array
+                              x-kubernetes-list-map-keys:
+                              - key
+                              - effect
+                              x-kubernetes-list-type: map
                             variables:
                               description: variables can be used to customize the
                                 MachinePool through patches.
@@ -3674,8 +3510,10 @@ spec:
 
                           Deprecated: This field is deprecated and is going to be removed when support for v1beta1 will be dropped. Please see https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20240916-improve-status-in-CAPI-resources.md for more details.
                         items:
-                          description: Condition defines an observation of a Cluster
-                            API resource operational state.
+                          description: |-
+                            Condition defines an observation of a Cluster API resource operational state.
+
+                            Deprecated: This type is deprecated and is going to be removed when support for v1beta1 will be dropped. Please see https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20240916-improve-status-in-CAPI-resources.md for more details.
                           properties:
                             lastTransitionTime:
                               description: |-
@@ -4058,6 +3896,19 @@ spec:
           spec:
             description: InClusterIPPoolSpec defines the desired state of InClusterIPPool.
             properties:
+              addressReuseGracePeriodSeconds:
+                description: |-
+                  AddressReuseGracePeriodSeconds is the duration in seconds for which an
+                  IP address should be kept reserved after being released, preventing
+                  immediate reuse. This helps avoid IP conflicts during rolling upgrades
+                  where old and new nodes may briefly coexist, and prevents ARP cache
+                  issues on network switches.
+                  If not set or set to 0, addresses are available for reuse immediately.
+                  During the grace period the IPAddress and claim deletions are held, the downstream consumers using foreground cascading
+                  deletion through the claim will see deletion of upstream resources delayed by up to AddressReuseGracePeriodSeconds.
+                format: int32
+                minimum: 0
+                type: integer
               addresses:
                 description: |-
                   Addresses is a list of IP addresses that can be assigned. This set of
@@ -4118,6 +3969,156 @@ spec:
                   used:
                     description: |-
                       Used is the count of allocated IPs in the pool.
+                      Counts greater than int can contain will report as math.MaxInt.
+                    type: integer
+                required:
+                - free
+                - outOfRange
+                - total
+                - used
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.2
+  labels:
+    clusterctl.cluster.x-k8s.io/move-hierarchy: ""
+  name: globalinclusterprefixpools.ipam.cluster.x-k8s.io
+spec:
+  conversion:
+    strategy: Webhook
+    webhook:
+      clientConfig:
+        service:
+          name: webhook-service
+          namespace: kube-system
+          path: /convert
+      conversionReviewVersions:
+      - v1
+  group: ipam.cluster.x-k8s.io
+  names:
+    categories:
+    - cluster-api
+    kind: GlobalInClusterPrefixPool
+    listKind: GlobalInClusterPrefixPoolList
+    plural: globalinclusterprefixpools
+    singular: globalinclusterprefixpool
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - description: List of prefixes to allocate sub-prefixes from
+      jsonPath: .spec.prefixes
+      name: Prefixes
+      type: string
+    - description: Count of allocatable sub-prefixes in the pool
+      jsonPath: .status.ipAddresses.total
+      name: Total
+      type: integer
+    - description: Count of unallocated sub-prefixes in the pool
+      jsonPath: .status.ipAddresses.free
+      name: Free
+      type: integer
+    - description: Count of allocated sub-prefixes in the pool
+      jsonPath: .status.ipAddresses.used
+      name: Used
+      type: integer
+    name: v1alpha2
+    schema:
+      openAPIV3Schema:
+        description: |-
+          GlobalInClusterPrefixPool is the Schema for the global inclusterprefixpools API.
+          This pool type is cluster scoped. IPAddressClaims can reference
+          pools of this type from any namespace.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: InClusterPrefixPoolSpec defines the desired state of InClusterPrefixPool.
+            properties:
+              allocationPrefixLength:
+                default: 64
+                description: |-
+                  AllocationPrefixLength is the prefix length of each allocated
+                  sub-prefix (e.g. 64 means /64 allocations). Defaults to 64.
+                  Must be >= the prefix length of each entry in Prefixes and <= 128.
+                maximum: 128
+                minimum: 1
+                type: integer
+              excludedPrefixes:
+                description: |-
+                  ExcludedPrefixes lists IPs/CIDRs/ranges to exclude from allocation.
+                  Any candidate sub-prefix overlapping an excluded entry is skipped.
+                items:
+                  type: string
+                type: array
+              gateway:
+                description: |-
+                  Gateway is the next-hop IPv6 address carried unchanged to every
+                  allocated IPAddress.Spec.Gateway. Unlike IP pools, the gateway does
+                  NOT block any prefix from being allocated — it is informational only.
+                type: string
+              prefixes:
+                description: |-
+                  Prefixes is a list of IPv6 CIDRs from which sub-prefixes are allocated.
+                  Each entry must be a network-aligned CIDR (e.g. "fd00::/48").
+                items:
+                  type: string
+                type: array
+            required:
+            - prefixes
+            type: object
+          status:
+            description: InClusterPrefixPoolStatus defines the observed state of InClusterPrefixPool.
+            properties:
+              ipAddresses:
+                description: |-
+                  Addresses reports the count of total, free, and used prefixes in the pool.
+                  The JSON tag is "ipAddresses" to match the InClusterIPPool status shape,
+                  keeping a consistent status contract across pool types.
+                properties:
+                  free:
+                    description: |-
+                      Free is the count of unallocated sub-prefixes.
+                      Counts greater than int can contain will report as math.MaxInt.
+                    type: integer
+                  outOfRange:
+                    description: |-
+                      OutOfRange is the count of allocated prefixes currently non-allocatable
+                      under spec (outside spec.Prefixes, overlapped by spec.ExcludedPrefixes,
+                      or with the wrong prefix length).
+                      Counts greater than int can contain will report as math.MaxInt.
+                    type: integer
+                  total:
+                    description: |-
+                      Total is the total number of allocatable sub-prefixes in the pool.
+                      Counts greater than int can contain will report as math.MaxInt.
+                    type: integer
+                  used:
+                    description: |-
+                      Used is the count of allocated sub-prefixes.
                       Counts greater than int can contain will report as math.MaxInt.
                     type: integer
                 required:
@@ -4333,6 +4334,19 @@ spec:
           spec:
             description: InClusterIPPoolSpec defines the desired state of InClusterIPPool.
             properties:
+              addressReuseGracePeriodSeconds:
+                description: |-
+                  AddressReuseGracePeriodSeconds is the duration in seconds for which an
+                  IP address should be kept reserved after being released, preventing
+                  immediate reuse. This helps avoid IP conflicts during rolling upgrades
+                  where old and new nodes may briefly coexist, and prevents ARP cache
+                  issues on network switches.
+                  If not set or set to 0, addresses are available for reuse immediately.
+                  During the grace period the IPAddress and claim deletions are held, the downstream consumers using foreground cascading
+                  deletion through the claim will see deletion of upstream resources delayed by up to AddressReuseGracePeriodSeconds.
+                format: int32
+                minimum: 0
+                type: integer
               addresses:
                 description: |-
                   Addresses is a list of IP addresses that can be assigned. This set of
@@ -4412,7 +4426,155 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.17.2
+  labels:
+    clusterctl.cluster.x-k8s.io/move-hierarchy: ""
+  name: inclusterprefixpools.ipam.cluster.x-k8s.io
+spec:
+  conversion:
+    strategy: Webhook
+    webhook:
+      clientConfig:
+        service:
+          name: webhook-service
+          namespace: kube-system
+          path: /convert
+      conversionReviewVersions:
+      - v1
+  group: ipam.cluster.x-k8s.io
+  names:
+    categories:
+    - cluster-api
+    kind: InClusterPrefixPool
+    listKind: InClusterPrefixPoolList
+    plural: inclusterprefixpools
+    singular: inclusterprefixpool
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - description: List of prefixes to allocate sub-prefixes from
+      jsonPath: .spec.prefixes
+      name: Prefixes
+      type: string
+    - description: Count of allocatable sub-prefixes in the pool
+      jsonPath: .status.ipAddresses.total
+      name: Total
+      type: integer
+    - description: Count of unallocated sub-prefixes in the pool
+      jsonPath: .status.ipAddresses.free
+      name: Free
+      type: integer
+    - description: Count of allocated sub-prefixes in the pool
+      jsonPath: .status.ipAddresses.used
+      name: Used
+      type: integer
+    name: v1alpha2
+    schema:
+      openAPIV3Schema:
+        description: InClusterPrefixPool is the Schema for the inclusterprefixpools
+          API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: InClusterPrefixPoolSpec defines the desired state of InClusterPrefixPool.
+            properties:
+              allocationPrefixLength:
+                default: 64
+                description: |-
+                  AllocationPrefixLength is the prefix length of each allocated
+                  sub-prefix (e.g. 64 means /64 allocations). Defaults to 64.
+                  Must be >= the prefix length of each entry in Prefixes and <= 128.
+                maximum: 128
+                minimum: 1
+                type: integer
+              excludedPrefixes:
+                description: |-
+                  ExcludedPrefixes lists IPs/CIDRs/ranges to exclude from allocation.
+                  Any candidate sub-prefix overlapping an excluded entry is skipped.
+                items:
+                  type: string
+                type: array
+              gateway:
+                description: |-
+                  Gateway is the next-hop IPv6 address carried unchanged to every
+                  allocated IPAddress.Spec.Gateway. Unlike IP pools, the gateway does
+                  NOT block any prefix from being allocated — it is informational only.
+                type: string
+              prefixes:
+                description: |-
+                  Prefixes is a list of IPv6 CIDRs from which sub-prefixes are allocated.
+                  Each entry must be a network-aligned CIDR (e.g. "fd00::/48").
+                items:
+                  type: string
+                type: array
+            required:
+            - prefixes
+            type: object
+          status:
+            description: InClusterPrefixPoolStatus defines the observed state of InClusterPrefixPool.
+            properties:
+              ipAddresses:
+                description: |-
+                  Addresses reports the count of total, free, and used prefixes in the pool.
+                  The JSON tag is "ipAddresses" to match the InClusterIPPool status shape,
+                  keeping a consistent status contract across pool types.
+                properties:
+                  free:
+                    description: |-
+                      Free is the count of unallocated sub-prefixes.
+                      Counts greater than int can contain will report as math.MaxInt.
+                    type: integer
+                  outOfRange:
+                    description: |-
+                      OutOfRange is the count of allocated prefixes currently non-allocatable
+                      under spec (outside spec.Prefixes, overlapped by spec.ExcludedPrefixes,
+                      or with the wrong prefix length).
+                      Counts greater than int can contain will report as math.MaxInt.
+                    type: integer
+                  total:
+                    description: |-
+                      Total is the total number of allocatable sub-prefixes in the pool.
+                      Counts greater than int can contain will report as math.MaxInt.
+                    type: integer
+                  used:
+                    description: |-
+                      Used is the count of allocated sub-prefixes.
+                      Counts greater than int can contain will report as math.MaxInt.
+                    type: integer
+                required:
+                - free
+                - outOfRange
+                - total
+                - used
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: ipaddressclaims.ipam.cluster.x-k8s.io
 spec:
   group: ipam.cluster.x-k8s.io
@@ -4434,7 +4596,7 @@ spec:
       jsonPath: .spec.poolRef.kind
       name: Pool Kind
       type: string
-    - description: Time duration since creation of IPAdressClaim
+    - description: Time duration since creation of IPAddressClaim
       jsonPath: .metadata.creationTimestamp
       name: Age
       type: date
@@ -4572,7 +4734,7 @@ spec:
       jsonPath: .spec.poolRef.kind
       name: Pool Kind
       type: string
-    - description: Time duration since creation of IPAdressClaim
+    - description: Time duration since creation of IPAddressClaim
       jsonPath: .metadata.creationTimestamp
       name: Age
       type: date
@@ -4785,7 +4947,7 @@ spec:
       jsonPath: .spec.poolRef.kind
       name: Pool Kind
       type: string
-    - description: Time duration since creation of IPAdressClaim
+    - description: Time duration since creation of IPAddressClaim
       jsonPath: .metadata.creationTimestamp
       name: Age
       type: date
@@ -4952,8 +5114,10 @@ spec:
 
                           Deprecated: This field is deprecated and is going to be removed when support for v1beta1 will be dropped. Please see https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20240916-improve-status-in-CAPI-resources.md for more details.
                         items:
-                          description: Condition defines an observation of a Cluster
-                            API resource operational state.
+                          description: |-
+                            Condition defines an observation of a Cluster API resource operational state.
+
+                            Deprecated: This type is deprecated and is going to be removed when support for v1beta1 will be dropped. Please see https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20240916-improve-status-in-CAPI-resources.md for more details.
                           properties:
                             lastTransitionTime:
                               description: |-
@@ -5017,7 +5181,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: ipaddresses.ipam.cluster.x-k8s.io
 spec:
   group: ipam.cluster.x-k8s.io
@@ -5043,7 +5207,7 @@ spec:
       jsonPath: .spec.poolRef.kind
       name: Pool Kind
       type: string
-    - description: Time duration since creation of IPAdress
+    - description: Time duration since creation of IPAddress
       jsonPath: .metadata.creationTimestamp
       name: Age
       type: date
@@ -5145,7 +5309,7 @@ spec:
       jsonPath: .spec.poolRef.kind
       name: Pool Kind
       type: string
-    - description: Time duration since creation of IPAdress
+    - description: Time duration since creation of IPAddress
       jsonPath: .metadata.creationTimestamp
       name: Age
       type: date
@@ -5248,7 +5412,7 @@ spec:
       jsonPath: .spec.poolRef.kind
       name: Pool Kind
       type: string
-    - description: Time duration since creation of IPAdress
+    - description: Time duration since creation of IPAddress
       jsonPath: .metadata.creationTimestamp
       name: Age
       type: date
@@ -5416,7 +5580,9 @@ rules:
   - ipam.cluster.x-k8s.io
   resources:
   - globalinclusterippools
+  - globalinclusterprefixpools
   - inclusterippools
+  - inclusterprefixpools
   - ipaddresses
   verbs:
   - create
@@ -5430,7 +5596,9 @@ rules:
   - ipam.cluster.x-k8s.io
   resources:
   - globalinclusterippools/finalizers
+  - globalinclusterprefixpools/finalizers
   - inclusterippools/finalizers
+  - inclusterprefixpools/finalizers
   - ipaddressclaims/finalizers
   - ipaddresses/finalizers
   verbs:
@@ -5439,7 +5607,9 @@ rules:
   - ipam.cluster.x-k8s.io
   resources:
   - globalinclusterippools/status
+  - globalinclusterprefixpools/status
   - inclusterippools/status
+  - inclusterprefixpools/status
   - ipaddressclaims/status
   - ipaddresses/status
   verbs:

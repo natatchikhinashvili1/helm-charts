@@ -77,19 +77,23 @@ build-provider-ipam:
 
 build-ipam-capi-remote:
 	@rm -rf ipam-capi-remote
-	@cat kustomize/ipam-capi-remote/kustomization.yaml > kustomization.yaml
+	@cat kustomize/ipam-capi-remote/manager/kustomization.yaml > kustomization.yaml
 	@kubectl kustomize | helmify -crd-dir ipam-capi-remote
-	@cp kustomize/ipam-capi-remote/remote-kubeconfig.yaml ipam-capi-remote/templates
-	@cp kustomize/ipam-capi-remote/managedresource.yaml ipam-capi-remote/templates
+	@$(SED) -i -e '/^      containers:/i\      initContainers:\n      {{- include "chart.webhook-injector-sidecar" . | nindent 6 }}' ipam-capi-remote/templates/deployment.yaml
+	@cp kustomize/ipam-capi-remote/templates/* ipam-capi-remote/templates
 	@mkdir ipam-capi-remote/managedresources
-	@kubectl kustomize kustomize/ipam-capi-remote-managedresources > ipam-capi-remote/managedresources/kustomize.yaml
-	@cp kustomize/ipam-capi-remote-managedresources/rbac.yaml ipam-capi-remote/managedresources
-	@cp kustomize/ipam-capi-remote-managedresources/globalinclusterippool.yaml ipam-capi-remote/managedresources
+	@kubectl kustomize kustomize/ipam-capi-remote/managedresources > ipam-capi-remote/managedresources/crds-and-rbac.yaml
+	@cp kustomize/ipam-capi-remote/managedresources/rbac.yaml ipam-capi-remote/managedresources
+	@cp kustomize/ipam-capi-remote/managedresources/globalinclusterippool.yaml ipam-capi-remote/managedresources
+	@kubectl kustomize kustomize/ipam-capi-remote/webhooks |\
+		yq eval 'select(.kind != "Service")' - |\
+		yq eval '(. | .webhooks[].clientConfig | select(.service)) |= ({"url": "https://ipam-capi-remote-webhook-service:443" + .service.path})' - > ipam-capi-remote/webhooks.yaml
+	@yq eval-all '. as $$item ireduce ({}; . * $$item)' ipam-capi-remote/values.yaml kustomize/ipam-capi-remote/values-override.yaml |\
+		yq eval -i '. *= load("/dev/stdin")' ipam-capi-remote/values.yaml
 	@yq -i '.controllerManager.manager.image.tag="$(PROVIDER_IPAM_VERSION)"' ipam-capi-remote/values.yaml
-	@yq -i '.fullnameOv""erride="ipam-capi"' ipam-capi-remote/values.yaml
-	@yq -i '.version="1.1.0"' ipam-capi-remote/Chart.yaml
-	@$(SED) -i 's/serviceAccountName.*$$/serviceAccountName: default/g' ipam-capi-remote/templates/deployment.yaml
-	@$(SED) -i 's/kind: Role/kind: ClusterRole/g' ipam-capi-remote/managedresources/kustomize.yaml
+	@yq -i '.version="1.2.0"' ipam-capi-remote/Chart.yaml
+	@$(SED) -i 's/serviceAccountName.*$$/serviceAccountName: {{ .Values.controllerManager.serviceAccountName }}/g' ipam-capi-remote/templates/deployment.yaml
+	@$(SED) -i 's/kind: Role/kind: ClusterRole/g' ipam-capi-remote/managedresources/crds-and-rbac.yaml
 
 build-provider-metal3:
 	$(call build-chart,provider-metal3,https://github.com/metal3-io/cluster-api-provider-metal3//config/default,$(PROVIDER_METAL3_VERSION))
