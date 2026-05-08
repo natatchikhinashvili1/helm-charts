@@ -1,4 +1,4 @@
-{{- if .Values.global.gardner.enabled }}
+{{- if .Values.global.gardener.enabled }}
 # Self-signed issuer to bootstrap the CA
 apiVersion: cert-manager.io/v1
 kind: Issuer

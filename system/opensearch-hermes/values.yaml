@@ -20,7 +20,7 @@ global:
       min_index_age: "1d"
       min_size: "50gb"
       min_doc_count: 100000000
-  gardner:
+  gardener:
     enabled: false
   manager:
     secret: DEFINED_IN_VALUES_FILE
