@@ -92,7 +92,7 @@ build-ipam-capi-remote:
 		yq eval -i '. *= load("/dev/stdin")' ipam-capi-remote/values.yaml
 	@yq -i '.controllerManager.manager.image.tag="$(PROVIDER_IPAM_VERSION)"' ipam-capi-remote/values.yaml
 	@yq -i '.version="1.2.0"' ipam-capi-remote/Chart.yaml
-	@$(SED) -i 's/serviceAccountName.*$$/serviceAccountName: default/g' ipam-capi-remote/templates/deployment.yaml
+	@$(SED) -i 's/serviceAccountName.*$$/serviceAccountName: {{ .Values.controllerManager.serviceAccountName }}/g' ipam-capi-remote/templates/deployment.yaml
 	@$(SED) -i 's/kind: Role/kind: ClusterRole/g' ipam-capi-remote/managedresources/crds-and-rbac.yaml
 
 build-provider-metal3:

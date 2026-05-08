@@ -1,7 +1,7 @@
 controllerManager:
   manager:
     args:
-      - --leader-elect
+      - --webhook-port=9443
     containerSecurityContext:
       allowPrivilegeEscalation: false
       capabilities:
@@ -22,29 +22,6 @@ controllerManager:
       requests:
         cpu: 10m
         memory: 64Mi
-    volumes:
-      - name: webhook-certs
-        mountPath: /tmp/k8s-webhook-server/serving-certs
-        readOnly: true
-        source:
-          emptyDir: {}
-      - name: remote-serviceaccount
-        mountPath: /var/run/secrets/kubernetes.io/remote-serviceaccount
-        readOnly: true
-        source:
-          secret:
-            secretName: ipam-capi-remote-kubeconfig
-            items:
-              - key: token
-                path: token
-              - key: bundle.crt
-                path: ca.crt
-      - name: remote-kubeconfig
-        mountPath: /var/run/remote-kubeconfig
-        readOnly: true
-        source:
-          configMap:
-            name: ipam-capi-remote-kubeconfig
   nodeSelector: {}
   podSecurityContext:
     runAsNonRoot: true
@@ -57,6 +34,8 @@ controllerManager:
     type: Recreate
   tolerations: []
   topologySpreadConstraints: []
+  serviceAccountName: ipam-capi-remote-webhook-injector
+  hostNetwork: false
 kubernetesClusterDomain: cluster.local
 managerConfig:
   controllerManagerConfigYaml: |-
@@ -73,7 +52,7 @@ managerConfig:
       resourceName: 7bb7acb4.ipam.cluster.x-k8s.io
 fullnameOverride: ipam-capi
 webhook:
-  enable: "true"
+  enable: true
 webhookInjector:
   repository: keppel.global.cloud.sap/ccloud-ghcr-io-mirror/SAP-cloud-infrastructure/webhook-injector
   tag: latest

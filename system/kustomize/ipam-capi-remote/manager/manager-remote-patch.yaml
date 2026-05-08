@@ -16,14 +16,14 @@ spec:
       containers:
         - name: manager
           volumeMounts:
-          - name: remote-kubeconfig
-            mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          - name: remote-serviceaccount
+            mountPath: /var/run/secrets/kubernetes.io/remote-serviceaccount
             readOnly: true
           env:
           - name: KUBERNETES_SERVICE_HOST
             value: "apiserver-url"
       volumes:
-      - name: remote-kubeconfig
+      - name: remote-serviceaccount
         secret:
           secretName: ipam-capi-remote-kubeconfig
           items:
@@ -31,3 +31,8 @@ spec:
             path: token
           - key: bundle.crt
             path: ca.crt
+          defaultMode: 420
+      - name: remote-kubeconfig
+        configMap:
+          name: ipam-capi-remote-kubeconfig
+          defaultMode: 420

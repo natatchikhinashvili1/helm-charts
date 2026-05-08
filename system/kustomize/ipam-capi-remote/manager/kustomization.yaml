@@ -4,3 +4,4 @@ resources:
 - https://github.com/kubernetes-sigs/cluster-api-ipam-provider-in-cluster//config/manager
 patches:
 - path: kustomize/ipam-capi-remote/manager/manager-remote-patch.yaml
+- path: kustomize/ipam-capi-remote/manager/manager-webhook-patch.yaml
