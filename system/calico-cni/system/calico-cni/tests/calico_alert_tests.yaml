@@ -1,0 +1,60 @@
+rule_files:
+  - /tmp/rules.yaml
+
+evaluation_interval: 1m
+
+tests:
+  # Test 1: Bond member fails → CalicoBondDegraded fires
+  - interval: 1m
+    name: "bond member failure"
+    input_series:
+      - series: 'node_bonding_slaves{master="bond0", node="node-1"}'
+        values: '2x10'
+      - series: 'node_bonding_active{master="bond0", node="node-1"}'
+        values: '2 2 1 1 1 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 7m
+        alertname: CalicoBondDegraded
+        exp_alerts:
+          - exp_labels:
+              severity: warning
+              master: bond0
+              node: node-1
+              service: calico
+              support_group: containers
+              tier: k8s
+              context: availability
+              playbook: "docs/support/playbook/kubernetes/k8s_bond_degraded"
+            exp_annotations:
+              summary: "Bond bond0 degraded on node node-1."
+              description: "Bond bond0 on node node-1 has 1 inactive member(s). Network redundancy degraded."
+
+  # Test 2: All bond members down → CalicoBondDown fires (critical)
+  - interval: 1m
+    name: "complete bond failure"
+    input_series:
+      - series: 'node_bonding_active{master="bond0", node="node-1"}'
+        values: '2 2 0 0 0 0'
+    alert_rule_test:
+      - eval_time: 5m
+        alertname: CalicoBondDown
+        exp_alerts:
+          - exp_labels:
+              severity: critical
+              master: bond0
+              node: node-1
+              service: calico
+              support_group: containers
+              tier: k8s
+              context: availability
+              playbook: "docs/support/playbook/kubernetes/k8s_bond_degraded"
+            exp_annotations:
+              summary: "Bond bond0 down on node node-1."
+              description: "Bond bond0 on node node-1 has no active members. All redundancy lost, network datapath at risk."
+
+  # Test 3: BGP mesh up but no routes → silent breakage alert
+  - interval: 1m
+    name: "BGP mesh silent breakage"
+    input_series:
+      - series: 'bird_protocol_prefix_export_count{proto="BGP",name="Mesh_node-2",node="node-1"}'
+        values: '0x20'
