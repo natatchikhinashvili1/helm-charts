@@ -62,5 +62,5 @@ roleRef:
   name: ipam-capi-remote-webhook-injector
 subjects:
   - kind: ServiceAccount
-    name: ipam-capi-remote-controller-manager
+    name: ipam-capi-controller-manager
     namespace: kube-system
