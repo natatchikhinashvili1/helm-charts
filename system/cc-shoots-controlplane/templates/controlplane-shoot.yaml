@@ -45,6 +45,7 @@ spec:
       multus:
         enabled: {{ default true (($cluster.networking.multus).enabled) }}
         installCNIPlugins: {{ default true (($cluster.networking.multus).installCNIPlugins) }}
+      serviceLoopPrevention: Disabled
   kubernetes:
     version: {{ default $.Values.kubernetes.version $cluster.version }}
     kubeAPIServer:

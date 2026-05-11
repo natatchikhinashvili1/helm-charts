@@ -133,7 +133,7 @@ opensearch_hermes:
   plugins:
     enabled: true
     installList:
-      - https://repo.eu-de-1.cloud.sap/opensearch/prometheus-exporter-3.6.0.0.zip
+      - https://github.com/opensearch-project/opensearch-prometheus-exporter/releases/download/3.6.0.0/prometheus-exporter-3.6.0.0.zip
   securityConfig:
     path: "/usr/share/opensearch/config/opensearch-security"
     enabled: true
@@ -175,7 +175,7 @@ opensearch_hermes_master:
   plugins:
     enabled: true
     installList:
-      - https://repo.eu-de-1.cloud.sap/opensearch/prometheus-exporter-3.6.0.0.zip
+      - https://github.com/opensearch-project/opensearch-prometheus-exporter/releases/download/3.6.0.0/prometheus-exporter-3.6.0.0.zip
   securityConfig:
     path: "/usr/share/opensearch/config/opensearch-security"
     enabled: true
