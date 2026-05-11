@@ -1,6 +1,7 @@
 controllerManager:
   manager:
     args:
+      - --leader-elect
       - --webhook-port=9443
     containerSecurityContext:
       allowPrivilegeEscalation: false
@@ -35,7 +36,6 @@ controllerManager:
   tolerations: []
   topologySpreadConstraints: []
   serviceAccountName: ipam-capi-remote-webhook-injector
-  hostNetwork: false
 kubernetesClusterDomain: cluster.local
 managerConfig:
   controllerManagerConfigYaml: |-
