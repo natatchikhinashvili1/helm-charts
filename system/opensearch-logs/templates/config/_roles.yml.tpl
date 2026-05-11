@@ -474,6 +474,7 @@ security_analytics_full_access:
   - "cluster:monitor/remote/info"
   - "cluster:monitor/main" # Required for OpenSearch terraform provider health check
   - "cluster:admin/opendistro/ism/policy/search"
+  - "indices:admin/index_template/get"
   index_permissions:
   - index_patterns:
     - "*"
