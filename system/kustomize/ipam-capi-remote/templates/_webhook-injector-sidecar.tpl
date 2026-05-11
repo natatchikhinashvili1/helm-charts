@@ -3,7 +3,7 @@
   restartPolicy: Always
   image: {{ .Values.webhookInjector.repository }}:{{ .Values.webhookInjector.tag }}
   args:
-    - --webhook-config-name=webhook-config
+    - --webhook-config-name=ipam-capi-remote-webhook-config
     - --target-kubeconfig=/var/run/remote-kubeconfig/kubeconfig
   ports:
     - name: metrics

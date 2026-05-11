@@ -87,6 +87,7 @@ build-ipam-capi-remote:
 	@cp kustomize/ipam-capi-remote/managedresources/globalinclusterippool.yaml ipam-capi-remote/managedresources
 	@kubectl kustomize kustomize/ipam-capi-remote/webhooks |\
 		yq eval 'select(.kind != "Service")' - |\
+		yq eval '.metadata.name = "ipam-capi-remote-" + .metadata.name' - |\
 		yq eval '(. | .webhooks[].clientConfig | select(.service)) |= ({"url": "https://ipam-capi-remote-webhook-service:443" + .service.path})' - > ipam-capi-remote/webhooks.yaml
 	@yq eval-all '. as $$item ireduce ({}; . * $$item)' ipam-capi-remote/values.yaml kustomize/ipam-capi-remote/values-override.yaml |\
 		yq eval -i '. *= load("/dev/stdin")' ipam-capi-remote/values.yaml

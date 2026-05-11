@@ -12,7 +12,7 @@ spec:
         networking.gardener.cloud/to-dns: allowed
         networking.resources.gardener.cloud/to-kube-apiserver-tcp-443: allowed
     spec:
-      hostNetwork: true
+      hostNetwork: false
       containers:
         - name: manager
           volumeMounts:

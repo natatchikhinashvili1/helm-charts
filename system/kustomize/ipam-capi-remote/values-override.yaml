@@ -9,7 +9,6 @@ controllerManager:
     env:
       KUBECONFIG: "/var/run/remote-kubeconfig/kubeconfig"
   serviceAccountName: ipam-capi-remote-webhook-injector
-  hostNetwork: false
   podSecurityContext:
     runAsUser: 65532 # ensure sidecar and main controller run as same user, so they can share generated tls certs via emptyDir volume 
     runAsGroup: 65532
