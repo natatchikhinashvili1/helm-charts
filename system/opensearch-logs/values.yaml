@@ -113,7 +113,7 @@ alerts:
   enabled: false
   prometheus: infra-frontend
 vpa:
-  enabled: true
+  enabled: false
 
 auth:
   ca_path: certs/admin/ca.crt
