@@ -35,6 +35,8 @@ spec:
         command:
         - /manager
         env:
+        - name: KUBECONFIG
+          value: {{ quote .Values.controllerManager.manager.env.kubeconfig }}
         - name: KUBERNETES_SERVICE_HOST
           value: {{ quote .Values.controllerManager.manager.env.kubernetesServiceHost }}
         - name: KUBERNETES_CLUSTER_DOMAIN
@@ -68,6 +70,9 @@ spec:
           readOnly: true
         - mountPath: /var/run/secrets/kubernetes.io/remote-serviceaccount
           name: remote-serviceaccount
+          readOnly: true
+        - mountPath: /var/run/remote-kubeconfig
+          name: remote-kubeconfig
           readOnly: true
       nodeSelector: {{- toYaml .Values.controllerManager.nodeSelector | nindent 8 }}
       securityContext: {{- toYaml .Values.controllerManager.podSecurityContext | nindent

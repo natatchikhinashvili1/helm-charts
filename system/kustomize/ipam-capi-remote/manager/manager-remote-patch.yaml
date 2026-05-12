@@ -24,7 +24,12 @@ spec:
           - name: remote-serviceaccount
             mountPath: /var/run/secrets/kubernetes.io/remote-serviceaccount
             readOnly: true
+          - name: remote-kubeconfig
+            readOnly: true
+            mountPath: /var/run/remote-kubeconfig
           env:
+          - name: KUBECONFIG
+            value: /var/run/remote-kubeconfig/kubeconfig
           - name: KUBERNETES_SERVICE_HOST
             value: "apiserver-url"
       volumes:
