@@ -9,7 +9,7 @@ spec:
       containers:
       - name: manager
         args:
-        - --leader-elect=false
+        - --leader-elect=true
         - --webhook-port=9443
         ports:
         - containerPort: 9443
