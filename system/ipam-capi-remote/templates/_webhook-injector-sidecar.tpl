@@ -5,6 +5,7 @@
   args:
     - --webhook-config-name=ipam-capi-remote-webhook-config
     - --target-kubeconfig=/var/run/remote-kubeconfig/kubeconfig
+    - --leader-election-id=ipam-capi-remote-webhook-injector-leader
   ports:
     - name: metrics
       containerPort: 8082
