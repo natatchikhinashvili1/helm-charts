@@ -1,4 +1,4 @@
-{{- if .Values.scaleout.enabled }}
+{{- if and .Values.scaleout.enabled .Values.opensearch_data_kvm.enabled}}
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 
