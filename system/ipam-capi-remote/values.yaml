@@ -1,7 +1,7 @@
 controllerManager:
   manager:
     args:
-      - --leader-elect=false
+      - --leader-elect=true
       - --webhook-port=9443
     containerSecurityContext:
       allowPrivilegeEscalation: false
