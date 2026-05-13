@@ -74,7 +74,7 @@ groups:
         support_group: containers
         tier: os
         dashboard: castellum
-        playbook: 'https://operations.global.cloud.sap/docs/support/playbook/castellum/resource_scraping_failing'
+        playbook: 'https://operations.global.cloud.sap/docs/resources/castellum/playbooks/resource_scraping_failing'
         meta: "Some resource scrapes are failing!"
       annotations:
         description: |
@@ -137,7 +137,7 @@ groups:
         support_group: containers
         tier: os
         dashboard: castellum
-        playbook: 'https://operations.global.cloud.sap/docs/support/playbook/castellum/asset_scraping_failing'
+        playbook: 'https://operations.global.cloud.sap/docs/resources/castellum/playbooks/asset_scraping_failing'
         meta: "Some asset scrapes of fresh assets are failing!"
       annotations:
         description: |
@@ -155,7 +155,7 @@ groups:
         support_group: containers
         tier: os
         dashboard: castellum
-        playbook: 'https://operations.global.cloud.sap/docs/support/playbook/castellum/asset_scraping_failing'
+        playbook: 'https://operations.global.cloud.sap/docs/resources/castellum/playbooks/asset_scraping_failing'
         meta: "Some asset scrapes of existing assets are failing!"
       annotations:
         description: |
@@ -229,7 +229,7 @@ groups:
         severity: warning
         support_group: containers
         tier: os
-        playbook: 'https://operations.global.cloud.sap/docs/support/playbook/castellum/asset_resizing_failing'
+        playbook: 'https://operations.global.cloud.sap/docs/resources/castellum/playbooks/asset_resizing_failing'
         dashboard: castellum
         meta: "Some non-Manila asset resizes are failing!"
       annotations:
@@ -248,7 +248,7 @@ groups:
         severity: warning
         support_group: compute-storage-api
         tier: os
-        playbook: 'https://operations.global.cloud.sap/docs/support/playbook/castellum/manila_asset_resizing_failing'
+        playbook: 'https://operations.global.cloud.sap/docs/resources/castellum/playbooks/manila_asset_resizing_failing'
         dashboard: castellum
         meta: "Some Manila asset resizes are failing!"
       annotations:
