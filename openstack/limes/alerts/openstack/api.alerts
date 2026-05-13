@@ -105,7 +105,7 @@ groups:
       severity: info
       support_group: '{{ if eq $labels.service_name "cinder" "ironic" "nova" "manila" -}} compute-storage-api {{- else if eq $labels.service_name "archer" "designate" "neutron" "octavia" -}} network-api {{- else if eq $labels.service_name "ceph" "swift" -}} storage {{- else -}} containers {{- end -}}'
       tier: os
-      playbook: 'https://operations.global.cloud.sap/docs/support/playbook/limes/alerts/failed_scrapes'
+      playbook: 'https://operations.global.cloud.sap/docs/resources/limes/playbooks/failed_scrapes'
     annotations:
       description: >
         {{ title $labels.namespace }} cannot scrape data from {{ title $labels.service_name }}
@@ -123,7 +123,7 @@ groups:
       severity: warning
       support_group: containers
       tier: os
-      playbook: 'https://operations.global.cloud.sap/docs/support/playbook/limes/alerts/failed_scrapes'
+      playbook: 'https://operations.global.cloud.sap/docs/resources/limes/playbooks/failed_scrapes'
     annotations:
       description: >
         {{ title $labels.namespace }} cannot scrape data for projects from {{ title $labels.service_name }}
@@ -239,7 +239,7 @@ groups:
       support_group: '{{ $labels.support_group }}'
       tier: os
       service: '{{ $labels.service_name }}'
-      playbook: 'https://operations.global.cloud.sap/docs/support/playbook/limes/alerts/non_growing_quota'
+      playbook: 'https://operations.global.cloud.sap/docs/resources/limes/playbooks/non_growing_quota'
     annotations:
       summary: Non-growing quota almost exhausted
       description: >
