@@ -197,26 +197,6 @@ groups:
       summary: "{{ $labels.namespace }}/{{ $labels.pod }} cannot publish audit events"
       description: "Audit events from {{ $labels.namespace }}/{{ $labels.pod }} could not be published to the RabbitMQ server. Check the pod log for detailed error messages. Affected audit events are held in memory until publishing succeeds."
 
-  - alert: OpenstackLimesIncompleteProjectResourceData
-    expr: max by (service, resource, namespace) (limes_project_resources_by_type_count) != on (namespace) group_left max by (namespace) (limes_project_count)
-    # Do not trigger too fast! When a new resource is added, it takes one full scrape cycle to create all resource records.
-    for: 60m
-    labels:
-      severity: info
-      support_group: containers
-      tier: os
-      service: limes
-      context: data-completeness
-      meta: "Incomplete project resource data for {{$labels.service}}/{{$labels.resource}}"
-      playbook: 'https://operations.global.cloud.sap/docs/support/playbook/limes/alerts/incomplete_project_resource_data'
-    annotations:
-      summary: Incomplete project resource data in Limes DB
-      description: Some or all projects are missing an entry in the "project_resources" table for {{ title $labels.namespace }} resource
-        {{$labels.service}}/{{$labels.resource}}. Until this is resolved, PUT requests on the API may fail. Check the
-        log for limes-collect; its consistency check should create any missing entries. If this alert only appears for
-        baremetal flavor resources, try restarting all nova-api pods, then afterwards restart all limes-api and
-        limes-collect pods.
-
   - alert: OpenstackLimesMismatchProjectQuota
     expr: max by (service_name, namespace) (limes_mismatch_project_quota_count > 0)
     for: 60m # every 30m, limes-collect scrapes quota/usage on each project service and at the same time tries to rectify this error; give it 1-2 chances before alerting
