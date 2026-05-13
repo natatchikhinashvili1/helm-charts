@@ -2,6 +2,7 @@ controllerManager:
   manager:
     args:
       - --leader-elect=true
+      - --leader-election-namespace=kube-system
       - --webhook-port=9443
     containerSecurityContext:
       allowPrivilegeEscalation: false
