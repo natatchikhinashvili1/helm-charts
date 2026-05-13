@@ -1,6 +1,6 @@
 ---
 apiVersion: v2
-appVersion: "yoga"
+appVersion: "epoxy"
 description: A Helm chart for OpenStack Octavia
 home: https://docs.openstack.org/octavia/latest/
 icon: https://www.openstack.org/themes/openstack/images/project-mascots/Octavia/OpenStack_Project_Octavia_vertical.png
