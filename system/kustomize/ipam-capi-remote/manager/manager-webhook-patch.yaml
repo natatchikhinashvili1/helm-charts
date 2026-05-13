@@ -9,8 +9,7 @@ spec:
       containers:
       - name: manager
         args:
-        - --leader-elect=true
-        - --leader-election-namespace=kube-system
+        - --leader-elect=false
         - --webhook-port=9443
         ports:
         - containerPort: 9443
